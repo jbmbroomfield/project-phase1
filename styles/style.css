@@ -1,0 +1,31 @@
+body {
+    font-family: 'Zen Dots', cursive;
+    background-color:  #000;
+    color: #FFD409;
+    margin: 100px;
+
+}
+
+.hover {
+    color: #c48a02; 
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+main {
+    padding: 20px 0;
+}
+
+p {
+    margin: 20px 0;
+}
+h1 {
+    margin: 0 0 20px 0;
+}
+
+/* img {
+    mix-blend-mode: multiply;
+} */
