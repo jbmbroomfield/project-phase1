@@ -175,7 +175,6 @@ function home() {
     span.classList.add('link')
     span.innerText = categoryData.heading
     addEventListeners(span, e => {
-      console.log({itemCategory})
       showItems(itemCategory)
     })
     p.appendChild(span)
@@ -227,7 +226,6 @@ function showItems(itemCategory, page = 1) {
   fetch(url)
   .then(resp => resp.json())
   .then(json => {
-    console.log(json)
     for (const item of json.results) {
       const categoryData = itemCategories[itemCategory]
       heading.innerText = categoryData.heading
@@ -253,16 +251,13 @@ function showItems(itemCategory, page = 1) {
 
 function convertToHttps(url) {
   if (url.slice(0, 4) === 'http' && url[4] !== 's') {
-    console.log('here')
     return 'https' + url.slice(4)
   }
-  console.log('there')
   return url
 }
 
 function showItem(url) {
   url = convertToHttps(url)
-  console.log(`Showing item with url: ${url}`)
   clear()
   currentUrl = url
   showStars()
@@ -271,7 +266,6 @@ function showItem(url) {
   fetch(url)
   .then(resp => resp.json())
   .then(json => {
-    console.log(json)
     heading.innerText = getName(json, categoryData)
     for (field of categoryData.fields) {
       const data = json[field]
