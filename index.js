@@ -200,6 +200,7 @@ function displayData(data, field) {
   newUL.className = `list-${field}`
   const ulId = `list-${field}`
   for (const url of data) {
+    url = convertToHttps(url)
     const newLI = document.createElement('li')
     fetch(url)
     .then(resp => resp.json())
