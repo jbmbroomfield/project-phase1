@@ -251,7 +251,18 @@ function showItems(itemCategory, page = 1) {
   })
 }
 
+function convertToHttps(url) {
+  if (url.slice(0, 4) === 'http' && url[4] !== 's') {
+    console.log('here')
+    return 'https' + url.slice(4)
+  }
+  console.log('there')
+  return url
+}
+
 function showItem(url) {
+  url = convertToHttps(url)
+  console.log(`Showing item with url: ${url}`)
   clear()
   currentUrl = url
   showStars()
