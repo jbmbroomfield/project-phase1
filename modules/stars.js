@@ -33,9 +33,9 @@ class Star {
         this.starDisplay = starDisplay
         this.index = index
         this.element = document.getElementById(`star${index}`)
-        this.element.addEventListener('click', () => { this.click() })
-        this.element.addEventListener('mouseover', () => { this.mouseover() })
-        this.element.addEventListener('mouseout', () => { this.mouseout() })
+        this.element.addEventListener('click', () => this.click())
+        this.element.addEventListener('mouseover', () => this.mouseover())
+        this.element.addEventListener('mouseout', () => this.mouseout())
     }
 
     mouseover() {

@@ -1,11 +1,7 @@
 function addEventListeners(node, clickEvent) {
   node.addEventListener('click', clickEvent)
-  node.addEventListener('mouseover', e => {
-    node.classList.add('hover')
-  })
-  node.addEventListener('mouseout', e => {
-    node.classList.remove('hover')
-  })
+  node.addEventListener('mouseover', () => node.classList.add('hover'))
+  node.addEventListener('mouseout', () => node.classList.remove('hover'))
 }
 
 export function appendLink(parent, text, clickEvent, newParagraph = false) {

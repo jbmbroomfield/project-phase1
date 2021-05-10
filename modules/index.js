@@ -17,19 +17,19 @@ function getName(item, categoryData) {
 
 function appendItemLink(parent, item, categoryData, newParagraph = false) {
   const text = getName(item, categoryData)
-  const clickEvent = () => { fetchItem(item.url) }
+  const clickEvent = () => fetchItem(item.url)
   return appendLink(parent, text, clickEvent, newParagraph)
 }
 
 function appendPageLink(parent, itemCategory, currentPage, newPage = 1) {
   const text = newPage === 1 ? 'Next' : 'Prev'
-  const clickEvent = () => { fetchItems(itemCategory, currentPage + newPage) }
+  const clickEvent = () => fetchItems(itemCategory, currentPage + newPage)
   return appendLink(parent, text, clickEvent, true)
 }
 
 
 function showHomeLink() {
-  return appendLink(nav, 'Home', () => { home() }, true)
+  return appendLink(nav, 'Home', () => home(), true)
 }
 
 
@@ -48,7 +48,7 @@ function home() {
   heading.innerText = 'STAR WARS Archives'
   for (const itemCategory in itemCategories) {
     const text = itemCategories[itemCategory].heading
-    const clickEvent = () => { fetchItems(itemCategory) }
+    const clickEvent = () => fetchItems(itemCategory)
     appendLink(main, text, clickEvent, true)
   }
 }
