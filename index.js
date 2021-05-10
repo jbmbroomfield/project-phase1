@@ -1,6 +1,4 @@
-const stars = []
-const myRatings = {}
-let currentUrl = ''
+import { starDisplay } from './stars.js'
 
 const heading = document.getElementById('heading')
 const main = document.querySelector('main')
@@ -88,22 +86,7 @@ const itemCategories = {
   },
 }
 
-for (let i = 0; i < 5; i++) {
-  const star = document.getElementById(`star${i}`)
-  stars.push(star)
-  star.addEventListener('mouseover', e => {
-    for (let j = 0; j < i + 1; j++) {
-      selectStar(stars[j])
-    }
-  })
-  star.addEventListener('mouseout', e => {
-    showStars()
-  })
-  star.addEventListener('click', e => {
-    myRatings[currentUrl] = i + 1
-    showStars()
-  })
-}
+
 
 function addEventListeners(node, clickEvent) {
   node.addEventListener('click', clickEvent)
@@ -115,28 +98,7 @@ function addEventListeners(node, clickEvent) {
   })
 }
 
-function selectStar(star) {
-  star.src = './images/rating-star-selected.png'
-}
 
-function unselectStar(star) {
-  star.src = './images/rating-star-unselected.png'
-}
-
-function hideStars() {
-  for (const star of stars) {
-    star.style.display = 'none'
-  }
-}
-
-function showStars() {
-  const rating = myRatings[currentUrl] || 0
-  for (i = 0; i < 5; i++) {
-    const star = stars[i]
-    star.style.display = ''
-    i < rating ? selectStar(star) : unselectStar(star)
-  }
-}
 
 function toTitle(string) {
   return string[0].toUpperCase() + string.slice(1).replace('_', ' ')
@@ -158,15 +120,13 @@ function pages(json) {
 function clear() {
   main.innerHTML = ''
   nav.innerHTML = ''
-  currentUrl = ''
   heading.innerText = ''
-  hideStars()
+  starDisplay.hide()
   window.scrollTo(0, 0)
 }
 
 function home() {
   clear()
-  hideStars()
   heading.innerText = 'STAR WARS Archives'
   for (const itemCategory in itemCategories) {
     const categoryData = itemCategories[itemCategory]
@@ -199,7 +159,7 @@ function displayData(data, field) {
   const newUL = document.createElement('ol')
   newUL.className = `list-${field}`
   const ulId = `list-${field}`
-  for (const url of data) {
+  for (let url of data) {
     url = convertToHttps(url)
     const newLI = document.createElement('li')
     fetch(url)
@@ -222,7 +182,6 @@ function displayData(data, field) {
 
 function showItems(itemCategory, page = 1) {
   clear()
-  hideStars()
   const url = 'https://swapi.dev/api/' + (itemCategory ? `${itemCategory}/?page=${page}` : '')
   fetch(url)
   .then(resp => resp.json())
@@ -230,7 +189,7 @@ function showItems(itemCategory, page = 1) {
     for (const item of json.results) {
       const categoryData = itemCategories[itemCategory]
       heading.innerText = categoryData.heading
-      newElement = document.createElement('p')
+      const newElement = document.createElement('p')
       newElement.appendChild(itemLink(item, categoryData))
       main.appendChild(newElement)
     }
@@ -260,15 +219,14 @@ function convertToHttps(url) {
 function showItem(url) {
   url = convertToHttps(url)
   clear()
-  currentUrl = url
-  showStars()
+  starDisplay.show(url)
   const itemCategory = getCategoryFromURL(url)
   const categoryData = itemCategories[itemCategory]
   fetch(url)
   .then(resp => resp.json())
   .then(json => {
     heading.innerText = getName(json, categoryData)
-    for (field of categoryData.fields) {
+    for (const field of categoryData.fields) {
       const data = json[field]
       if (data) {
         const newElement = document.createElement('p')
