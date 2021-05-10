@@ -7,32 +7,6 @@ const nav = document.querySelector('nav')
 const heading = document.getElementById('heading')
 
 
-function getName(item, categoryData) {
-  const nameField = categoryData.nameField
-  return item[nameField]
-}
-
-
-// LINKS //
-
-function appendItemLink(parent, item, categoryData, newParagraph = false) {
-  const text = getName(item, categoryData)
-  const clickEvent = () => fetchItem(item.url)
-  return appendLink(parent, text, clickEvent, newParagraph)
-}
-
-function appendPageLink(parent, itemCategory, currentPage, newPage = 1) {
-  const text = newPage === 1 ? 'Next' : 'Prev'
-  const clickEvent = () => fetchItems(itemCategory, currentPage + newPage)
-  return appendLink(parent, text, clickEvent, true)
-}
-
-
-function showHomeLink() {
-  return appendLink(nav, 'Home', () => home(), true)
-}
-
-
 // NAVIGATION //
 
 function clear() {
@@ -68,6 +42,10 @@ function fetchItems(itemCategory, page = 1) {
     })
 }
 
+function showHomeLink() {
+  return appendLink(nav, 'Home', () => home(), true)
+}
+
 function showItems(items, itemCategory) {
   for (const item of items) {
     const categoryData = itemCategories[itemCategory]
@@ -75,6 +53,17 @@ function showItems(items, itemCategory) {
     const newElement = document.createElement('p')
     appendItemLink(main, item, categoryData, true)
   }
+}
+
+function appendItemLink(parent, item, categoryData, newParagraph = false) {
+  const text = getName(item, categoryData)
+  const clickEvent = () => fetchItem(item.url)
+  return appendLink(parent, text, clickEvent, newParagraph)
+}
+
+function getName(item, categoryData) {
+  const nameField = categoryData.nameField
+  return item[nameField]
 }
 
 function showPageLinks(json, page, itemCategory) {
@@ -90,6 +79,12 @@ function showPageLinks(json, page, itemCategory) {
   if (page > 1) {
     appendPageLink(nav, itemCategory, page, -1)
   }
+}
+
+function appendPageLink(parent, itemCategory, currentPage, newPage = 1) {
+  const text = newPage === 1 ? 'Next' : 'Prev'
+  const clickEvent = () => fetchItems(itemCategory, currentPage + newPage)
+  return appendLink(parent, text, clickEvent, true)
 }
 
 
